@@ -17,10 +17,10 @@ website:
 format:
   html:
     theme: 
-      light: flatly # flatly sandstone yeti united litera journal
-      dark: darkly #  darkly cyborg slate solra superhero
+      light: journal # flatly sandstone yeti united litera journal
+      dark: superhero #  darkly cyborg slate solra superhero
     mainfont: system-ui; 
-    highlight-style: atom-one  # atom-one espresso
+    highlight-style: espresso  # atom-one espresso
     css: styles.css
     toc: false
     include-after-body: target_blank.html

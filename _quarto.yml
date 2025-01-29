@@ -3,7 +3,7 @@ project:
   output-dir: "." 
 
 website:
-  title: "YOUR NAME"
+  title: "Erin Mansfield"
   navbar:
     # background: "#1c4982"
     pinned: true

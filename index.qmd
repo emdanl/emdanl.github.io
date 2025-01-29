@@ -1,15 +1,15 @@
 ---
-title: "YOUR NAME" 
+title: "Erin Mansfield" 
 about:
-  template: trestles  # jolla  trestles  solana  marquee  broadside
-  image: img/profile.png
+  template: solana  # jolla  trestles  solana  marquee  broadside
+  image: img/profile-me.jpeg
   image-width: 16em
   image-shape: rounded # rectangle  round  rounded
   
   links:
     - icon: linkedin
       text: LinkedIn
-      href: https://linkedin.com
+      href: https://www.linkedin.com
     - icon: instagram
       text: Instagram
       href: https://instagram.com
@@ -22,18 +22,18 @@ about:
       target: _blank
     - icon: mailbox
       text: Email
-      href: mailto:YOUR_EMAIL@geneseo.edu
+      href: enm5@geneseo.edu
 
 ---
 
 
-Finley Malloc majors in Data Analytics at SUNY Geneseo. When not working on data analytics, Finley enjoys spending time unicycling and playing with her pet iguana.
+Erin Mansfield majors in Finance and minors in Data Analytics and Accounting at SUNY Geneseo. When not working on school work, Erin loves to read and be with friends. She also plays on the tournament team for the women's  volleyball club here at Geneseo. 
 
 ## Education
 
 State University of New York at Geneseo | Geneseo, NY <br>
-B.S. in Data Analytics | Aug 2022 - May 2026 <br>
-Minor in Economics
+B.S. in Finance | Aug 2022 - May 2026 <br>
+Minor in Data Analytics and Accounting
 
 ## Experience
 

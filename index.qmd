@@ -22,12 +22,12 @@ about:
       target: _blank
     - icon: mailbox
       text: Email
-      href: enm5@geneseo.edu 
+      href: https://mail.google.com  
 
 ---
 
 
-Erin Mansfield majors in Finance and minors in Data Analytics and Accounting at SUNY Geneseo. When not working on school work, Erin loves to read and be with friends. She also plays on the tournament team for the Women's  Volleyball Club here at Geneseo. 
+Erin Mansfield majors in Finance and minors in Data Analytics and Accounting at SUNY Geneseo. When not working on school work, Erin loves to read and be with friends. She also plays on the tournament team for the Woman's  Volleyball Club here at Geneseo. 
 
 ## Education
 

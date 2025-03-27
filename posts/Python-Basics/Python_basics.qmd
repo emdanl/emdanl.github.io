@@ -1,4 +1,4 @@
-```python
+```qmd
 ---
 title: Python Basics
 author: Erin Mansfield

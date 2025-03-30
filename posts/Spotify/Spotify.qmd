@@ -1,0 +1,53 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# Spotify\n"
+      ],
+      "metadata": {
+        "id": "vbu3DLeQOdWs"
+      }
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "g1MlfEaaOSlJ"
+      },
+      "outputs": [],
+      "source": [
+        "import pandas as pd\n",
+        "from google.colab import data_table\n",
+        "data_table.enable_dataframe_formatter()\n",
+        "spotify = pd.read_csv('https://bcdanl.github.io/data/spotify_all.csv')\n",
+        "\n",
+        "artist_counts = spotify[\"artist_name\"].value_counts()\n",
+        "\n",
+        "top_artists = artist_counts.sort_values(ascending=False)\n",
+        "\n",
+        "favorite_artist = \"Drake\"\n",
+        "fav_artists_songs = spotify[spotify[\"artist_name\"] == favorite_artist]\n",
+        "\n",
+        "fav_artists_songs_sorted = fav_artist_songs.sort_values(by=\"duration_ms\", ascending=False)\n",
+        "\n",
+        "print(f\"Top artists by song count:\\n{top_artists.head(10)}\\n\")\n",
+        "print(f\"Songs by {favorite_artist} sorted by duration:\\n{fav_artists_songs_sorted[['track_name', 'duration_ms']]}\")\n"
+      ]
+    }
+  ]
+}

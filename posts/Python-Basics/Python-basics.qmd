@@ -1,17 +1,17 @@
-```qmd
+
 ---
 title: Python Basics
 author: Erin Mansfield
 date: 2025-2-17
 categories: [python, basics, programming]
-image: "image.png"
+image: "basics.png"
 toc: true
 ---
 ```
 
 # Lecture 4
 
-
+![An overview of Python basics](basics.png)
 
 ```python
 # Python Basics

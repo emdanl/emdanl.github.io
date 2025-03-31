@@ -1,3 +1,13 @@
+---
+title: Spotify
+author: Erin Mansfield
+date: 2025-3-10
+categories: [songs]
+image: "image.png"
+toc: true
+---
+
+```
 {
   "nbformat": 4,
   "nbformat_minor": 0,
@@ -15,39 +25,90 @@
   },
   "cells": [
     {
-      "cell_type": "markdown",
+      "cell_type": "code",
       "source": [
-        "# Spotify\n"
+        "---\n",
+        "title: Spotify\n",
+        "author: Erin Mansfield\n",
+        "date: 2025-3-10\n",
+        "categories: [songs]\n",
+        "image: \"image.png\"\n",
+        "toc: true\n",
+        "---"
       ],
       "metadata": {
-        "id": "vbu3DLeQOdWs"
+        "id": "BRPGLk8myPhX"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# Music"
+      ],
+      "metadata": {
+        "id": "EMJwIn7WyeOQ"
       }
     },
     {
       "cell_type": "code",
-      "execution_count": null,
-      "metadata": {
-        "id": "g1MlfEaaOSlJ"
-      },
-      "outputs": [],
       "source": [
+        "# Upload the CSV File\n",
+        "\n",
         "import pandas as pd\n",
-        "from google.colab import data_table\n",
-        "data_table.enable_dataframe_formatter()\n",
-        "spotify = pd.read_csv('https://bcdanl.github.io/data/spotify_all.csv')\n",
         "\n",
-        "artist_counts = spotify[\"artist_name\"].value_counts()\n",
+        "spotify = pd.read_csv(\"https://bcdanl.github.io/data/spotify_all.csv\")\n",
+        "spotify.head()"
+      ],
+      "metadata": {
+        "id": "ySfud4LU55Z9"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Frequency\n",
         "\n",
-        "top_artists = artist_counts.sort_values(ascending=False)\n",
+        "artist_counts = spotify['artist_name'].value_counts()\n",
+        "artist_counts.head(10)"
+      ],
+      "metadata": {
+        "id": "fQoIx_HY6C5-"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Usher Filter\n",
         "\n",
-        "favorite_artist = \"Drake\"\n",
-        "fav_artists_songs = spotify[spotify[\"artist_name\"] == favorite_artist]\n",
+        "usher_tracks = spotify[spotify['artist_name'] == 'Usher']\n",
+        "usher_tracks[['playlist_name', 'track_name', 'pos']]"
+      ],
+      "metadata": {
+        "id": "ME3NbCnU6OHZ"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Sort Usher\n",
         "\n",
-        "fav_artists_songs_sorted = fav_artist_songs.sort_values(by=\"duration_ms\", ascending=False)\n",
-        "\n",
-        "print(f\"Top artists by song count:\\n{top_artists.head(10)}\\n\")\n",
-        "print(f\"Songs by {favorite_artist} sorted by duration:\\n{fav_artists_songs_sorted[['track_name', 'duration_ms']]}\")\n"
-      ]
+        "usher_sorted = usher_tracks.sort_values(by='pos')\n",
+        "usher_sorted[['playlist_name', 'track_name', 'pos']]"
+      ],
+      "metadata": {
+        "id": "c_4zUGAF6XVh"
+      },
+      "execution_count": null,
+      "outputs": []
     }
   ]
 }
+```

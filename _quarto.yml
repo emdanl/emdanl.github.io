@@ -1,0 +1,36 @@
+project: 
+  type: website
+  output-dir: "." 
+
+website:
+  title: "YOUR NAME"
+  navbar:
+    # background: "#1c4982"
+    pinned: true
+    left:
+      - text: Project
+        href: danl-research-template.qmd
+      - text: Data Analysis
+        menu: 
+          - text: Data Visualization with `ggplot`
+            href: notes/danl-ggplot.qmd
+          - text: Data Transformation with `dplyr`
+            href: notes/danl-dplyr.qmd
+      - text: Blog
+        href: blog-listing.qmd
+      
+            
+  # page-footer: 
+  #   center: "Powered with GitHub and Quarto<br>© YOUR NAME, 2026"
+
+format:
+  html:
+    theme: 
+      light: flatly # flatly sandstone yeti united litera journal brite
+      dark: darkly #  darkly cyborg slate solra superhero
+    mainfont: system-ui; 
+    highlight-style: atom-one  # atom-one espresso
+    css: styles.css
+    toc: false
+    include-after-body: target_blank.html
+

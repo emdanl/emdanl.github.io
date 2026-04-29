@@ -1,0 +1,279 @@
+---
+title: "Presentation"
+format: html
+editor: visual
+---
+
+```{r}
+library(readr)
+library(dplyr)
+library(lubridate)
+library(stringr)
+
+scores <- read_csv("2010-2025_scores.csv")
+head(scores)
+
+
+# The dataset taken from the website Kaggle details information on the National Football League games from 2010 through 2025. The dataset includes 5,832 observations and 9 variables. The observations and dataset show a record of game outcomes across several seasons. The games include preseason, regular season, and special events. There are key details from a single game. The key details and variables included are seaosn, week, GameStatus, GameDate, AwayTeam, AwayScore, HomeTeam, and HomeScore. The team names are abbreviated, for example DAL is for the Dallas Cowboys. Scores are recorded as numeric values, which makes the statistical analysis of the data more suitable. The dataset can be used for analyzing scoring trends over time, differences between home and away performance, and building models for game outcomes. 
+```
+
+```{r}
+scores_clean <- scores |>
+  mutate(
+    GameDate_clean = str_remove(GameDate, "(st|nd|rd|th)$"),
+    GameDate_full = paste(GameDate_clean, Season),
+    GameDate = suppressWarnings(mdy(GameDate_full)),
+    total_points = HomeScore + AwayScore,
+    point_diff = abs(HomeScore - AwayScore),
+    winner = ifelse(HomeScore > AwayScore, HomeTeam, AwayTeam),
+    loser = ifelse(HomeScore < AwayScore, HomeTeam, AwayTeam),
+    home_win = HomeScore > AwayScore
+  )
+regular <- scores_clean |>
+  filter(GameStatus == "Regular")
+
+# After importing the dataset from above, I created a clean version. The clean version is represented as scores_clean. In this step, I wanted to make the game data more usable. In particular, I focused on the date format. I also created new variables for analysis, and make sure to locate the winner and loser of each game. 
+
+# The addition of the new columns I added included the total points, point difference, winner, loser and home win. The total points include the total points scored by both teams, the point difference is the difference in points between the home and away scores. The winner and loser columns include the team that won and lost the game. The home win column expresses whether the home team that won the game. 
+
+# Throughout the original dataset, there were several GameDate variables that had endings such as st, nd, rd, and th. I removed the endings, and then created the clean date with the season year. Afterwards, I created teh full date into standard date with the mdy function. 
+```
+
+```{r}
+unique(scores_clean$Week)
+```
+
+```{r}
+#Season Level Summary
+
+regular <- scores_clean |>
+  filter(GameStatus == "FINAL") |>
+  filter(str_detect(Week, "^WEEK"))
+
+season_summary <- regular |>
+  group_by(Season) |>
+  summarise(
+    avg_points = mean(total_points, na.rm = TRUE),
+    avg_diff = mean(point_diff, na.rm = TRUE),
+    games = n(),
+    high_scoring = sum(total_points >= 50, na.rm = TRUE),
+    close_games = sum(point_diff <= 3, na.rm = TRUE)
+  )
+
+
+# While using the clean dataset, I created a summary to look at the trends between scoring and game competitiveness over time. In the code, I first filtered the data to include just completed games.I then filtered the dataset again to include the variable week. This would remove and special events or preseason games to order consistency in comparisons. 
+
+# I then grouped the data by season and calculated several summary statistics. The summary statistics include the average points, average difference, number of games, high scoring games, and close games. 
+
+# There were several insights from the data. One of the insights includes the number of games per season. The number of game per season includes 256, and has increased to 272 in 2021. This was when the NFL expanded the regular season schedule. The average scoring per game does fall in the mid-40s, with a peak in 2020 with 49.5 points. The average point difference is around 10 to 12 points, which was relatively stable.
+```
+
+```{r}
+#Highest Scoring Games
+
+top_games <- regular |>
+  arrange(desc(total_points)) |>
+  slice_head(n = 10)
+
+
+# The next analysis was the highest scoring game amount. To identify the extreme scoring performances, I filtered the regular season dataset. Then I sorted all games in descending order on the basis of total points that were scored. Afterwards, I used slice_head to filter out the top 10 highest scoring games. 
+
+# Some key findings from the dataset include that the highest scoring game occurred in the year 2018.The game took place between the Kansas City Chiefs and Los Angeles Rams. That game has a combined 105 toatl points. Most of the top games had a small point differences. This suggests that high scoring games are often competitive. 
+
+# The interpretation of the results is that high scoring games are very uncommon. However, they do tend to be super competitive. 
+```
+
+```{r}
+# Closest Games 
+closest_games <- regular |>
+  arrange(point_diff) |>
+  slice_head(n = 10)
+
+# The next analysis was of the most competitive matchups. The closest games had the smallest point differences. The regular season dataset was sorted by the smallest point differences, and then put them in ascending order. Afterwards, I selected the top 10 closest games. 
+
+# The key findings showed that several of the closest games resulted in ties. The ties happened to occur through multiple seasons. The results of the tie show that they may be rare, but they do happen recurring in the NFL. All the games are competitive, and they can be either high or low scoring. 
+```
+
+```{r}
+# Team Level Summary 
+team_summary <- regular |>
+  mutate(team = winner) |>
+  group_by(team, Season) |>
+  summarise(
+    wins = n(),
+    avg_points_scored = mean(total_points, na.rm = TRUE),
+    avg_point_diff = mean(point_diff, na.rm = TRUE)
+  )
+
+
+# The team level summary analysis was what I completed next. I wanted to analyze the team performance across seasons. I first created a team level summary dataset, and then I grouped the data by team and season to evaluate the success of each team over time. I assigned each team that won the game a new variable, which is seen in team = winner. I then found the following variables: wins, average points scored, average points difference.
+
+# The key insights from this analysis was that teams with higher win totals tend to have larger average point differentials. This suggests that these teams have stronger overall performance. Teams do have high win totals with moderate scoring. There is also a notable variation in team performance across the seasons. This suggests that the success within the NFL is not consistent year to year. 
+ 
+```
+
+```{r}
+# Home vs Away Scoring 
+home_away_summary <- regular |>
+  summarise(
+    avg_home_score = mean(HomeScore, na.rm = TRUE),
+    avg_away_score = mean(AwayScore, na.rm = TRUE),
+    home_win_rate = mean(home_win, na.rm = TRUE)
+  )
+
+
+# The home vs away scoring analysis was focused on the overall scoring between home and away teams. I calculated the home score average, the away score average, and then the percentage of games won by the home team. The results show that the average home score is 23.73964, and the average away score is 21.72431. The home win rate was around 55.3 percent, which means that home teams won slighly more on average. 
+
+# The interpretation is that there is a small home field advantage in the NFL. The home teams tend to score slighly more on average, and do win slightly more. It supports the idea that playing at home does provide a competitive advantage. 
+```
+
+```{r}
+# Distribution of Total Points
+points_distribution <- regular |>
+  summarise(
+    mean_points = mean(total_points),
+    median_points = median(total_points),
+    sd_points = sd(total_points),
+    min_points = min(total_points),
+    max_points = max(total_points)
+  )
+points_distribution
+
+# The distribution of total points is to better look at the scoring patterns. The summary statistics were calculated for teh total points scored in each game. The mean average total points are 45.46395, the median total points include 44, the standard deviation is 13.86, the minimum total points was 3 and the maximum total points were 105. 
+
+# The interpretation of the summary statistics is that the average and medium total points are very close, which means the scoring is fairly symmetrical. There is no obvious extreme skew. Most games in the NFL tend to have total scores in the mid-40s. The standard deviation indicates a moderate amount of variability. This means that many games fall near the average, but there are differences in scoring across games. There is also a wide range from the low of 3 to the high of 105 points. 
+```
+
+```{r}
+# Line Chart of Average Points Per Season
+library(ggplot2)
+
+ggplot(season_summary, aes(x = Season, y = avg_points)) +
+  geom_line(color = "steelblue", linewidth = 1.2) +
+  geom_point(color = "steelblue", size = 2) +
+  labs(
+    title = "Average Total Points per Game by Season",
+    x = "Season",
+    y = "Average Points"
+  ) + 
+  theme_minimal(base_size = 14)
+
+# I then moved onto the visualization section. I created a line chart in order to show the average total points per game for each NFL season. The graph then allows for a easy comparison of how scoring has changed from the year 2010 to 2025. 
+
+# The key observations show that the average points per game are relatively stable. The games range from 43 to 47 points. The noticeable peak was in 2020, with an average of around 49 points per game. There was a dip in scoring from 2017 and then again in 2022 and 2023. The scoring does have an increase after those two seasons. 
+
+# The score does fluctuate from year to year, but remains fairly consistent over time. The increase in 2020 does reflect the conditions during that season. 
+
+```
+
+```{r}
+# Line Chart of Total Games per Season
+ggplot(season_summary, aes(x = Season, y = games)) +
+  geom_line(color = "darkgreen", linewidth = 1.2) +
+  geom_point(color = "darkgreen", size = 2) +
+  labs(
+    title = "Number of Regular Season Games per Season",
+    x = "Season",
+    y = "Games"
+  ) +
+  theme_minimal(base_size = 14)
+
+# The number of games per season is the next line graph. I wanted to better understand the changes in the structure of NFL season. The line chart shows the total number of regular season games played throughout the year. 
+
+# The key observations that were seemed came from 2010 through 2020, the number of games per season remains constant at 256 games. Then there are more games per season at the beginning in 2021. The increase is 272 games per season. After 2021, the number of games return to being stable at the high number of games. 
+```
+
+```{r}
+# Bar Chart of Average Points by Week
+
+avg_points_by_week <- regular |>
+  mutate(week_num = as.numeric(str_extract(Week, "\\d+"))) |>
+  group_by(week_num) |>
+  summarise(avg_points = mean(total_points, na.rm = TRUE))
+ggplot(avg_points_by_week, aes(x = week_num, y = avg_points)) +
+  geom_col(fill = "darkorange") +
+  labs(
+    title = "Average Points by Week (all seasons)",
+    x = "Week",
+    y = "Average Points"
+  ) + 
+  theme_minimal(base_size = 14)
+
+# The average points per week showed the scoring changes throughout the NFL season. The bar chart shows the average total points per game for each week. As seen in the code, I extracted the numeric week value from the Week variable, and then grouped by the data by week. After, I calculated the average total points scored in each week. 
+
+# The key observations showed the scoring is consistent across weeks. The range is between 43 and 47 points per game. There is also a slight increase in scoring from early to mid season. The scoring does also dip slighly in the later weeks of the season. The no week is considered to be an outlier. 
+
+```
+
+```{r}
+# Bar Chart of High Scoring Games per Season 
+ggplot(season_summary, aes(x = Season, y = high_scoring)) + 
+  geom_col(fill = "purple") + 
+  labs(
+    title = "Number of High Scoring Games per Season",
+    x = "Season",
+    y = "High Scoring Games"
+  ) + 
+  theme_minimal(base_size = 14)
+
+# The high scoring games per season is the second bar chart that was made. The bar chart shows the number of high scoring games in each season. The key observations of the bar chart is that the number of high scoring games varies by season. The range is around 80 to 120 games. The 2020 season stands out with the highest number of high scoring games. The years 2013, 2018, and 2021 also shows high number of high scoring games. There were noticeable dips in years like 2011, 2017, and 2022 and 2023, the high scoring games were fewer than other years. 
+
+# The interpretation of the chart shows that offensive performance does change across seasons. There is no steady trend. 
+```
+
+```{r}
+# Heatmap of Team and Average Points Scored 
+
+library(ggplot2)
+
+team_season_points <- regular |>
+  mutate(
+    team = HomeTeam,
+    points = HomeScore
+  ) |>
+  bind_rows(
+    regular |>
+      mutate(
+        team = AwayTeam,
+        points = AwayScore
+      )
+  ) |>
+  group_by(team, Season) |>
+  summarise(
+    avg_points = mean(points, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+
+team_heatmap <- team_season_points |>
+  ggplot(aes(x = Season, y = team, fill = avg_points)) +
+  geom_tile(color = "white") +
+  scale_fill_viridis_c(option = "plasma", name = "Avg Points") +
+  labs(
+    title = "NFL Team Scoring Heatmap",
+    x = "Season",
+    y = "Team"
+  ) + 
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.y = element_text(size = 8)
+  )
+team_heatmap
+
+# The final visual that was created was the team scoring heatmap. To explore the difference in scoring across teams and seasons, I used a colorful heatmap that would display the team's average points scored per season. Each row represents a team, and each column represents a season. The color intensity shows the average points scored. 
+
+# The key observations are that teams have a noticeable variation in scoring performance across different seasons. The warmer colors indicate the seasons where  teams had higher offensive output, while the cooler colors represent lower scoring seasons. 
+
+# The interpretation of the heatmap shows a comprehensive view of how offensive performance changes across both teams and time. It shows that scoring success is not only team dependent, but also is dependent on the season. There could be external factors such as coaching changes, different strategies, and injuries. 
+```
+
+```{r}
+"install.packages(usethis)"
+"usethis::create_github_token()"
+```
+
+```{r}
+"install.packages(gitcreds)
+gitcreds::gitcreds_set()"
+
+```

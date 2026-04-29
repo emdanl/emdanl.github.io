@@ -3,13 +3,15 @@ project:
   output-dir: "." 
 
 website:
-  title: "YOUR NAME"
+  title: "Erin Mansfield"
   navbar:
     # background: "#1c4982"
     pinned: true
     left:
       - text: Project
         href: danl-research-template.qmd
+      - text: Presentation
+        href: presentation.qmd
       - text: Data Analysis
         menu: 
           - text: Data Visualization with `ggplot`

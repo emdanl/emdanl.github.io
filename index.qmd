@@ -1,5 +1,5 @@
 ---
-title: "YOUR NAME" 
+title: "Data Project" 
 about:
   template: jolla  # jolla  trestles  solana  marquee  broadside
   image: img/profile.png
@@ -19,20 +19,20 @@ about:
       target: _blank
     - icon: mailbox
       text: Email
-      href: mailto:YOUR_EMAIL@geneseo.edu
+      href: mailto:enm5@geneseo.edu
 ---
 
 
-Finley Malloc majors in Data Analytics at SUNY Geneseo. When not working on data analytics, Finley enjoys spending time unicycling and playing with her pet iguana.
+Erin Mansfield majors in Accounting at SUNY Geneseo. She also has a minor in Data Analytics. When not working on data analytics, she enjoys reading. 
 
 ## Education
 
 State University of New York at Geneseo | Geneseo, NY <br>
-B.S. in Data Analytics | Aug 2023 - May 2027 <br>
-Minor in Economics
+B.S. in Accounting | Aug 2023 - May 2026 <br>
+Minor in Data Analytics
 
 ## Experience
 
-Starbucks Analytics | Data Analyst Intern | May 2025 - Aug 2025
+Chautauqua Institution | Drescher and Malecki- Staff Auditor | May 2026 - current
 
 

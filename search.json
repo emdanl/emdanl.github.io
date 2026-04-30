@@ -9,9 +9,9 @@
   {
     "objectID": "notes/danl-dplyr.html",
     "href": "notes/danl-dplyr.html",
-    "title": "dplyr Basics",
+    "title": "dplyr for NFL Data",
     "section": "",
-    "text": "This document introduces the dplyr workflow for cleaning, transforming, and summarizing data in R.\nYou will learn how to:\n\nselect columns with select()\nfilter rows with filter()\nsort data with arrange()\ncreate new variables with mutate()\nsummarize data with summarise()\ngroup operations with group_by()\ncombine datasets with joins"
+    "text": "I used dplyr to clean, transform, and prepare the NFL game level dataset fro the Data Storytelling Project.\n-Clean game dates -Extract week numbers -Create scoring variables -Filter to regular season games -Summarize scoring by season and week"
   },
   {
     "objectID": "notes/danl-dplyr.html#install-one-time",
@@ -387,9 +387,9 @@
   {
     "objectID": "notes/danl-ggplot.html",
     "href": "notes/danl-ggplot.html",
-    "title": "ggplot2 Basics",
+    "title": "ggplot2 for NFL Data",
     "section": "",
-    "text": "This document introduces the ggplot2 workflow for building clear and professional visualizations in R.\nYou will learn how to:\n\ncreate scatterplots, line plots, and bar charts\nmap variables to aesthetics (aes())\ncontrol color, size, transparency, and labels\nuse facet_wrap() to compare groups\npolish plots with themes and annotations"
+    "text": "1 Getting Started\nExplains how I used ggplot2 to visualize NFL scoring patterns for the Data Storytelling Project. All examples used the cleaned dataset scores_clean, which includes: -total points, point differential, week number, season, home/away scores, and cleaned date scores\nWe learned how to:\n-create scatterplots, line charts, and bar charts using NFL data - Map scoring variables -Compare season and weeks -Customize themes, colors, and labels -Graphics for analysis and storytelling"
   },
   {
     "objectID": "notes/danl-ggplot.html#install-one-time",

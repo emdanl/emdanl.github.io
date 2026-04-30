@@ -14,174 +14,6 @@
     "text": "I used dplyr to clean, transform, and prepare the NFL game level dataset fro the Data Storytelling Project.\n-Clean game dates -Extract week numbers -Create scoring variables -Filter to regular season games -Summarize scoring by season and week"
   },
   {
-    "objectID": "notes/danl-dplyr.html#install-one-time",
-    "href": "notes/danl-dplyr.html#install-one-time",
-    "title": "dplyr Basics",
-    "section": "2.1 Install (one-time)",
-    "text": "2.1 Install (one-time)\n\n\nShow the code\n# install.packages(\"tidyverse\")"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#load-packages",
-    "href": "notes/danl-dplyr.html#load-packages",
-    "title": "dplyr Basics",
-    "section": "2.2 Load packages",
-    "text": "2.2 Load packages\n\n\nShow the code\nlibrary(tidyverse)"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#select-a-few-columns",
-    "href": "notes/danl-dplyr.html#select-a-few-columns",
-    "title": "dplyr Basics",
-    "section": "5.1 Select a few columns",
-    "text": "5.1 Select a few columns\n\n\nShow the code\nmpg |&gt;\n  select(manufacturer, model, displ, hwy)\n\n\n# A tibble: 234 × 4\n   manufacturer model      displ   hwy\n   &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;\n 1 audi         a4           1.8    29\n 2 audi         a4           1.8    29\n 3 audi         a4           2      31\n 4 audi         a4           2      30\n 5 audi         a4           2.8    26\n 6 audi         a4           2.8    26\n 7 audi         a4           3.1    27\n 8 audi         a4 quattro   1.8    26\n 9 audi         a4 quattro   1.8    25\n10 audi         a4 quattro   2      28\n# ℹ 224 more rows"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#select-a-range-of-columns",
-    "href": "notes/danl-dplyr.html#select-a-range-of-columns",
-    "title": "dplyr Basics",
-    "section": "5.2 Select a range of columns",
-    "text": "5.2 Select a range of columns\n\n\nShow the code\nmpg |&gt;\n  select(manufacturer:year)\n\n\n# A tibble: 234 × 4\n   manufacturer model      displ  year\n   &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;\n 1 audi         a4           1.8  1999\n 2 audi         a4           1.8  1999\n 3 audi         a4           2    2008\n 4 audi         a4           2    2008\n 5 audi         a4           2.8  1999\n 6 audi         a4           2.8  1999\n 7 audi         a4           3.1  2008\n 8 audi         a4 quattro   1.8  1999\n 9 audi         a4 quattro   1.8  1999\n10 audi         a4 quattro   2    2008\n# ℹ 224 more rows"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#remove-columns",
-    "href": "notes/danl-dplyr.html#remove-columns",
-    "title": "dplyr Basics",
-    "section": "5.3 Remove columns",
-    "text": "5.3 Remove columns\n\n\nShow the code\nmpg |&gt;\n  select(-cty, -hwy)\n\n\n# A tibble: 234 × 9\n   manufacturer model      displ  year   cyl trans      drv   fl    class  \n   &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  \n 1 audi         a4           1.8  1999     4 auto(l5)   f     p     compact\n 2 audi         a4           1.8  1999     4 manual(m5) f     p     compact\n 3 audi         a4           2    2008     4 manual(m6) f     p     compact\n 4 audi         a4           2    2008     4 auto(av)   f     p     compact\n 5 audi         a4           2.8  1999     6 auto(l5)   f     p     compact\n 6 audi         a4           2.8  1999     6 manual(m5) f     p     compact\n 7 audi         a4           3.1  2008     6 auto(av)   f     p     compact\n 8 audi         a4 quattro   1.8  1999     4 manual(m5) 4     p     compact\n 9 audi         a4 quattro   1.8  1999     4 auto(l5)   4     p     compact\n10 audi         a4 quattro   2    2008     4 manual(m6) 4     p     compact\n# ℹ 224 more rows"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#filter-by-a-condition",
-    "href": "notes/danl-dplyr.html#filter-by-a-condition",
-    "title": "dplyr Basics",
-    "section": "6.1 Filter by a condition",
-    "text": "6.1 Filter by a condition\n\n\nShow the code\nmpg |&gt;\n  filter(class == \"compact\")\n\n\n# A tibble: 47 × 11\n   manufacturer model      displ  year   cyl trans drv     cty   hwy fl    class\n   &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;\n 1 audi         a4           1.8  1999     4 auto… f        18    29 p     comp…\n 2 audi         a4           1.8  1999     4 manu… f        21    29 p     comp…\n 3 audi         a4           2    2008     4 manu… f        20    31 p     comp…\n 4 audi         a4           2    2008     4 auto… f        21    30 p     comp…\n 5 audi         a4           2.8  1999     6 auto… f        16    26 p     comp…\n 6 audi         a4           2.8  1999     6 manu… f        18    26 p     comp…\n 7 audi         a4           3.1  2008     6 auto… f        18    27 p     comp…\n 8 audi         a4 quattro   1.8  1999     4 manu… 4        18    26 p     comp…\n 9 audi         a4 quattro   1.8  1999     4 auto… 4        16    25 p     comp…\n10 audi         a4 quattro   2    2008     4 manu… 4        20    28 p     comp…\n# ℹ 37 more rows"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#multiple-conditions-with-and",
-    "href": "notes/danl-dplyr.html#multiple-conditions-with-and",
-    "title": "dplyr Basics",
-    "section": "6.2 Multiple conditions with AND",
-    "text": "6.2 Multiple conditions with AND\n\n\nShow the code\nmpg |&gt;\n  filter(class == \"compact\", year == 2008)\n\n\n# A tibble: 22 × 11\n   manufacturer model      displ  year   cyl trans drv     cty   hwy fl    class\n   &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;\n 1 audi         a4           2    2008     4 manu… f        20    31 p     comp…\n 2 audi         a4           2    2008     4 auto… f        21    30 p     comp…\n 3 audi         a4           3.1  2008     6 auto… f        18    27 p     comp…\n 4 audi         a4 quattro   2    2008     4 manu… 4        20    28 p     comp…\n 5 audi         a4 quattro   2    2008     4 auto… 4        19    27 p     comp…\n 6 audi         a4 quattro   3.1  2008     6 auto… 4        17    25 p     comp…\n 7 audi         a4 quattro   3.1  2008     6 manu… 4        15    25 p     comp…\n 8 subaru       impreza a…   2.5  2008     4 auto… 4        20    25 p     comp…\n 9 subaru       impreza a…   2.5  2008     4 auto… 4        20    27 r     comp…\n10 subaru       impreza a…   2.5  2008     4 manu… 4        19    25 p     comp…\n# ℹ 12 more rows"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#or-conditions-using-in",
-    "href": "notes/danl-dplyr.html#or-conditions-using-in",
-    "title": "dplyr Basics",
-    "section": "6.3 OR conditions using %in%",
-    "text": "6.3 OR conditions using %in%\n\n\nShow the code\nmpg |&gt;\n  filter(class %in% c(\"compact\", \"suv\"))\n\n\n# A tibble: 109 × 11\n   manufacturer model      displ  year   cyl trans drv     cty   hwy fl    class\n   &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;\n 1 audi         a4           1.8  1999     4 auto… f        18    29 p     comp…\n 2 audi         a4           1.8  1999     4 manu… f        21    29 p     comp…\n 3 audi         a4           2    2008     4 manu… f        20    31 p     comp…\n 4 audi         a4           2    2008     4 auto… f        21    30 p     comp…\n 5 audi         a4           2.8  1999     6 auto… f        16    26 p     comp…\n 6 audi         a4           2.8  1999     6 manu… f        18    26 p     comp…\n 7 audi         a4           3.1  2008     6 auto… f        18    27 p     comp…\n 8 audi         a4 quattro   1.8  1999     4 manu… 4        18    26 p     comp…\n 9 audi         a4 quattro   1.8  1999     4 auto… 4        16    25 p     comp…\n10 audi         a4 quattro   2    2008     4 manu… 4        20    28 p     comp…\n# ℹ 99 more rows"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#sort-ascending",
-    "href": "notes/danl-dplyr.html#sort-ascending",
-    "title": "dplyr Basics",
-    "section": "7.1 Sort ascending",
-    "text": "7.1 Sort ascending\n\n\nShow the code\nmpg |&gt;\n  arrange(hwy)\n\n\n# A tibble: 234 × 11\n   manufacturer model      displ  year   cyl trans drv     cty   hwy fl    class\n   &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;\n 1 dodge        dakota pi…   4.7  2008     8 auto… 4         9    12 e     pick…\n 2 dodge        durango 4…   4.7  2008     8 auto… 4         9    12 e     suv  \n 3 dodge        ram 1500 …   4.7  2008     8 auto… 4         9    12 e     pick…\n 4 dodge        ram 1500 …   4.7  2008     8 manu… 4         9    12 e     pick…\n 5 jeep         grand che…   4.7  2008     8 auto… 4         9    12 e     suv  \n 6 chevrolet    k1500 tah…   5.3  2008     8 auto… 4        11    14 e     suv  \n 7 jeep         grand che…   6.1  2008     8 auto… 4        11    14 p     suv  \n 8 chevrolet    c1500 sub…   5.3  2008     8 auto… r        11    15 e     suv  \n 9 chevrolet    k1500 tah…   5.7  1999     8 auto… 4        11    15 r     suv  \n10 dodge        dakota pi…   5.2  1999     8 auto… 4        11    15 r     pick…\n# ℹ 224 more rows"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#sort-descending",
-    "href": "notes/danl-dplyr.html#sort-descending",
-    "title": "dplyr Basics",
-    "section": "7.2 Sort descending",
-    "text": "7.2 Sort descending\n\n\nShow the code\nmpg |&gt;\n  arrange(desc(hwy))\n\n\n# A tibble: 234 × 11\n   manufacturer model      displ  year   cyl trans drv     cty   hwy fl    class\n   &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;\n 1 volkswagen   jetta        1.9  1999     4 manu… f        33    44 d     comp…\n 2 volkswagen   new beetle   1.9  1999     4 manu… f        35    44 d     subc…\n 3 volkswagen   new beetle   1.9  1999     4 auto… f        29    41 d     subc…\n 4 toyota       corolla      1.8  2008     4 manu… f        28    37 r     comp…\n 5 honda        civic        1.8  2008     4 auto… f        25    36 r     subc…\n 6 honda        civic        1.8  2008     4 auto… f        24    36 c     subc…\n 7 toyota       corolla      1.8  1999     4 manu… f        26    35 r     comp…\n 8 toyota       corolla      1.8  2008     4 auto… f        26    35 r     comp…\n 9 honda        civic        1.8  2008     4 manu… f        26    34 r     subc…\n10 honda        civic        1.6  1999     4 manu… f        28    33 r     subc…\n# ℹ 224 more rows"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#sort-by-multiple-variables",
-    "href": "notes/danl-dplyr.html#sort-by-multiple-variables",
-    "title": "dplyr Basics",
-    "section": "7.3 Sort by multiple variables",
-    "text": "7.3 Sort by multiple variables\n\n\nShow the code\nmpg |&gt;\n  arrange(class, desc(hwy))\n\n\n# A tibble: 234 × 11\n   manufacturer model    displ  year   cyl trans   drv     cty   hwy fl    class\n   &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;\n 1 chevrolet    corvette   5.7  1999     8 manual… r        16    26 p     2sea…\n 2 chevrolet    corvette   6.2  2008     8 manual… r        16    26 p     2sea…\n 3 chevrolet    corvette   6.2  2008     8 auto(s… r        15    25 p     2sea…\n 4 chevrolet    corvette   7    2008     8 manual… r        15    24 p     2sea…\n 5 chevrolet    corvette   5.7  1999     8 auto(l… r        15    23 p     2sea…\n 6 volkswagen   jetta      1.9  1999     4 manual… f        33    44 d     comp…\n 7 toyota       corolla    1.8  2008     4 manual… f        28    37 r     comp…\n 8 toyota       corolla    1.8  1999     4 manual… f        26    35 r     comp…\n 9 toyota       corolla    1.8  2008     4 auto(l… f        26    35 r     comp…\n10 toyota       corolla    1.8  1999     4 auto(l… f        24    33 r     comp…\n# ℹ 224 more rows"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#create-a-new-variable",
-    "href": "notes/danl-dplyr.html#create-a-new-variable",
-    "title": "dplyr Basics",
-    "section": "8.1 Create a new variable",
-    "text": "8.1 Create a new variable\n\n\nShow the code\nmpg |&gt;\n  mutate(hwy_per_liter = hwy / displ)\n\n\n# A tibble: 234 × 12\n   manufacturer model      displ  year   cyl trans drv     cty   hwy fl    class\n   &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;\n 1 audi         a4           1.8  1999     4 auto… f        18    29 p     comp…\n 2 audi         a4           1.8  1999     4 manu… f        21    29 p     comp…\n 3 audi         a4           2    2008     4 manu… f        20    31 p     comp…\n 4 audi         a4           2    2008     4 auto… f        21    30 p     comp…\n 5 audi         a4           2.8  1999     6 auto… f        16    26 p     comp…\n 6 audi         a4           2.8  1999     6 manu… f        18    26 p     comp…\n 7 audi         a4           3.1  2008     6 auto… f        18    27 p     comp…\n 8 audi         a4 quattro   1.8  1999     4 manu… 4        18    26 p     comp…\n 9 audi         a4 quattro   1.8  1999     4 auto… 4        16    25 p     comp…\n10 audi         a4 quattro   2    2008     4 manu… 4        20    28 p     comp…\n# ℹ 224 more rows\n# ℹ 1 more variable: hwy_per_liter &lt;dbl&gt;"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#create-multiple-new-variables",
-    "href": "notes/danl-dplyr.html#create-multiple-new-variables",
-    "title": "dplyr Basics",
-    "section": "8.2 Create multiple new variables",
-    "text": "8.2 Create multiple new variables\n\n\nShow the code\nmpg |&gt;\n  mutate(\n    hwy_per_liter = hwy / displ,\n    cty_per_liter = cty / displ\n  )\n\n\n# A tibble: 234 × 13\n   manufacturer model      displ  year   cyl trans drv     cty   hwy fl    class\n   &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;\n 1 audi         a4           1.8  1999     4 auto… f        18    29 p     comp…\n 2 audi         a4           1.8  1999     4 manu… f        21    29 p     comp…\n 3 audi         a4           2    2008     4 manu… f        20    31 p     comp…\n 4 audi         a4           2    2008     4 auto… f        21    30 p     comp…\n 5 audi         a4           2.8  1999     6 auto… f        16    26 p     comp…\n 6 audi         a4           2.8  1999     6 manu… f        18    26 p     comp…\n 7 audi         a4           3.1  2008     6 auto… f        18    27 p     comp…\n 8 audi         a4 quattro   1.8  1999     4 manu… 4        18    26 p     comp…\n 9 audi         a4 quattro   1.8  1999     4 auto… 4        16    25 p     comp…\n10 audi         a4 quattro   2    2008     4 manu… 4        20    28 p     comp…\n# ℹ 224 more rows\n# ℹ 2 more variables: hwy_per_liter &lt;dbl&gt;, cty_per_liter &lt;dbl&gt;"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#use-if_else-for-conditional-logic",
-    "href": "notes/danl-dplyr.html#use-if_else-for-conditional-logic",
-    "title": "dplyr Basics",
-    "section": "8.3 Use if_else() for conditional logic",
-    "text": "8.3 Use if_else() for conditional logic\n\n\nShow the code\nmpg |&gt;\n  mutate(\n    big_engine = if_else(displ &gt;= 4, \"Yes\", \"No\")\n  ) |&gt;\n  count(big_engine)\n\n\n# A tibble: 2 × 2\n  big_engine     n\n  &lt;chr&gt;      &lt;int&gt;\n1 No           148\n2 Yes           86"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#one-summary-value",
-    "href": "notes/danl-dplyr.html#one-summary-value",
-    "title": "dplyr Basics",
-    "section": "9.1 One summary value",
-    "text": "9.1 One summary value\n\n\nShow the code\nmpg |&gt;\n  summarise(mean_hwy = mean(hwy))\n\n\n# A tibble: 1 × 1\n  mean_hwy\n     &lt;dbl&gt;\n1     23.4"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#multiple-summaries",
-    "href": "notes/danl-dplyr.html#multiple-summaries",
-    "title": "dplyr Basics",
-    "section": "9.2 Multiple summaries",
-    "text": "9.2 Multiple summaries\n\n\nShow the code\nmpg |&gt;\n  summarise(\n    mean_hwy = mean(hwy),\n    sd_hwy   = sd(hwy),\n    max_hwy  = max(hwy),\n    min_hwy  = min(hwy)\n  )\n\n\n# A tibble: 1 × 4\n  mean_hwy sd_hwy max_hwy min_hwy\n     &lt;dbl&gt;  &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;\n1     23.4   5.95      44      12\n\n\n✅ Tip: Use na.rm = TRUE if your data has missing values."
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#mean-highway-mpg-by-class",
-    "href": "notes/danl-dplyr.html#mean-highway-mpg-by-class",
-    "title": "dplyr Basics",
-    "section": "10.1 Mean highway MPG by class",
-    "text": "10.1 Mean highway MPG by class\n\n\nShow the code\nmpg |&gt;\n  group_by(class) |&gt;\n  summarise(mean_hwy = mean(hwy), .groups = \"drop\") |&gt;\n  arrange(desc(mean_hwy))\n\n\n# A tibble: 7 × 2\n  class      mean_hwy\n  &lt;chr&gt;         &lt;dbl&gt;\n1 compact        28.3\n2 subcompact     28.1\n3 midsize        27.3\n4 2seater        24.8\n5 minivan        22.4\n6 suv            18.1\n7 pickup         16.9"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#count-rows-by-group",
-    "href": "notes/danl-dplyr.html#count-rows-by-group",
-    "title": "dplyr Basics",
-    "section": "10.2 Count rows by group",
-    "text": "10.2 Count rows by group\n\n\nShow the code\nmpg |&gt;\n  group_by(drv) |&gt;\n  summarise(n = n(), .groups = \"drop\")\n\n\n# A tibble: 3 × 2\n  drv       n\n  &lt;chr&gt; &lt;int&gt;\n1 4       103\n2 f       106\n3 r        25"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#top-rows",
-    "href": "notes/danl-dplyr.html#top-rows",
-    "title": "dplyr Basics",
-    "section": "13.1 Top rows",
-    "text": "13.1 Top rows\n\n\nShow the code\nmpg |&gt;\n  slice_head(n = 5)\n\n\n# A tibble: 5 × 11\n  manufacturer model displ  year   cyl trans      drv     cty   hwy fl    class \n  &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; \n1 audi         a4      1.8  1999     4 auto(l5)   f        18    29 p     compa…\n2 audi         a4      1.8  1999     4 manual(m5) f        21    29 p     compa…\n3 audi         a4      2    2008     4 manual(m6) f        20    31 p     compa…\n4 audi         a4      2    2008     4 auto(av)   f        21    30 p     compa…\n5 audi         a4      2.8  1999     6 auto(l5)   f        16    26 p     compa…"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#bottom-rows",
-    "href": "notes/danl-dplyr.html#bottom-rows",
-    "title": "dplyr Basics",
-    "section": "13.2 Bottom rows",
-    "text": "13.2 Bottom rows\n\n\nShow the code\nmpg |&gt;\n  slice_tail(n = 5)\n\n\n# A tibble: 5 × 11\n  manufacturer model  displ  year   cyl trans      drv     cty   hwy fl    class\n  &lt;chr&gt;        &lt;chr&gt;  &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;\n1 volkswagen   passat   2    2008     4 auto(s6)   f        19    28 p     mids…\n2 volkswagen   passat   2    2008     4 manual(m6) f        21    29 p     mids…\n3 volkswagen   passat   2.8  1999     6 auto(l5)   f        16    26 p     mids…\n4 volkswagen   passat   2.8  1999     6 manual(m5) f        18    26 p     mids…\n5 volkswagen   passat   3.6  2008     6 auto(s6)   f        17    26 p     mids…"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#top-rows-by-a-variable",
-    "href": "notes/danl-dplyr.html#top-rows-by-a-variable",
-    "title": "dplyr Basics",
-    "section": "13.3 Top rows by a variable",
-    "text": "13.3 Top rows by a variable\n\n\nShow the code\nmpg |&gt;\n  arrange(desc(hwy)) |&gt;\n  slice_head(n = 10)\n\n\n# A tibble: 10 × 11\n   manufacturer model      displ  year   cyl trans drv     cty   hwy fl    class\n   &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;\n 1 volkswagen   jetta        1.9  1999     4 manu… f        33    44 d     comp…\n 2 volkswagen   new beetle   1.9  1999     4 manu… f        35    44 d     subc…\n 3 volkswagen   new beetle   1.9  1999     4 auto… f        29    41 d     subc…\n 4 toyota       corolla      1.8  2008     4 manu… f        28    37 r     comp…\n 5 honda        civic        1.8  2008     4 auto… f        25    36 r     subc…\n 6 honda        civic        1.8  2008     4 auto… f        24    36 c     subc…\n 7 toyota       corolla      1.8  1999     4 manu… f        26    35 r     comp…\n 8 toyota       corolla      1.8  2008     4 auto… f        26    35 r     comp…\n 9 honda        civic        1.8  2008     4 manu… f        26    34 r     subc…\n10 honda        civic        1.6  1999     4 manu… f        28    33 r     subc…"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#left_join-most-common",
-    "href": "notes/danl-dplyr.html#left_join-most-common",
-    "title": "dplyr Basics",
-    "section": "15.1 left_join() (most common)",
-    "text": "15.1 left_join() (most common)\n\n\nShow the code\nstudents |&gt;\n  left_join(grades, by = \"id\")\n\n\n# A tibble: 3 × 3\n     id name  score\n  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;\n1   101 Alex     95\n2   102 Bella    NA\n3   103 Chris    88"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#inner_join",
-    "href": "notes/danl-dplyr.html#inner_join",
-    "title": "dplyr Basics",
-    "section": "15.2 inner_join()",
-    "text": "15.2 inner_join()\n\n\nShow the code\nstudents |&gt;\n  inner_join(grades, by = \"id\")\n\n\n# A tibble: 2 × 3\n     id name  score\n  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;\n1   101 Alex     95\n2   103 Chris    88"
-  },
-  {
-    "objectID": "notes/danl-dplyr.html#anti_join-find-non-matches",
-    "href": "notes/danl-dplyr.html#anti_join-find-non-matches",
-    "title": "dplyr Basics",
-    "section": "15.3 anti_join() (find non-matches)",
-    "text": "15.3 anti_join() (find non-matches)\n\n\nShow the code\nstudents |&gt;\n  anti_join(grades, by = \"id\")\n\n\n# A tibble: 1 × 2\n     id name \n  &lt;dbl&gt; &lt;chr&gt;\n1   102 Bella"
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Data Project",
@@ -268,44 +100,37 @@
   {
     "objectID": "danl-research-template.html",
     "href": "danl-research-template.html",
-    "title": "Data Analytics Capstone Title",
+    "title": "Data Analytics Project",
     "section": "",
-    "text": "Describe the real-world motivation for your project. Clearly state your research question and explain why it matters.\nBriefly preview your data, empirical approach, main findings, and contribution."
+    "text": "The National Football League has changed multiple times over the past few years with their offensive strategy. From those changes, came questions on how the scoring patterns have been affected over time. As the NFL has evolved, analysts and fans have made claims that the NFL is turning into an offensive game. However, these claims are not necessary based on data analysis.\nThis particular project looks at if scoring has truly increased from the years 2010-2025. The data identifies when, where, and how the scoring has varied across not just seasons, but weeks.\nYou will see throughout this project that there is a clear data picture of how NFL scoring has evolved over time. It highlights the weeks and the seasons where the offensive performance may deviate from the past."
   },
   {
     "objectID": "danl-research-template.html#data-source",
     "href": "danl-research-template.html#data-source",
-    "title": "Data Analytics Capstone Title",
+    "title": "Data Analytics Project",
     "section": "3.1 Data Source",
-    "text": "3.1 Data Source\nDescribe the data source clearly. Include the source name, link, and access date in the References section."
+    "text": "3.1 Data Source\nThe dataset is from Kaggle with NFL game logs from the 2010-2025 seasons. The row represents an NFL game, with team names, scores, week, season, game date, and game status."
   },
   {
     "objectID": "danl-research-template.html#unit-of-observation",
     "href": "danl-research-template.html#unit-of-observation",
-    "title": "Data Analytics Capstone Title",
+    "title": "Data Analytics Project",
     "section": "3.2 Unit of Observation",
-    "text": "3.2 Unit of Observation\nExplain what each row in your dataset represents."
+    "text": "3.2 Unit of Observation\nEach row is one NFL game. This is a perfect unit for scoring patterns analysts."
   },
   {
     "objectID": "danl-research-template.html#key-variables",
     "href": "danl-research-template.html#key-variables",
-    "title": "Data Analytics Capstone Title",
+    "title": "Data Analytics Project",
     "section": "3.3 Key Variables",
-    "text": "3.3 Key Variables\nDescribe your outcome variable, main explanatory variables, and important control variables."
+    "text": "3.3 Key Variables\nThe key variables include: -HomeScore, AwayScore: raw points scored by each team -total_points: sum of both teams’ scores -point_diff: absolute difference between scores -winner/loser: team outcome indicators -home_win: whether the home team won -GameDate: cleaned and standardized date -week_num: numeric week extracted from the “WEEEK X” label -Season: year of the season"
   },
   {
     "objectID": "danl-research-template.html#data-cleaning",
     "href": "danl-research-template.html#data-cleaning",
-    "title": "Data Analytics Capstone Title",
+    "title": "Data Analytics Project",
     "section": "3.4 Data Cleaning",
-    "text": "3.4 Data Cleaning\nExplain major cleaning steps, sample restrictions, missing values, and variable construction."
-  },
-  {
-    "objectID": "danl-research-template.html#summary-statistics",
-    "href": "danl-research-template.html#summary-statistics",
-    "title": "Data Analytics Capstone Title",
-    "section": "3.5 Summary Statistics",
-    "text": "3.5 Summary Statistics\n\n\nCode\n# Replace this example with your own data and summary statistics.\n# skim(your_data)"
+    "text": "3.4 Data Cleaning\nMajor cleaning steps: - Removing suffixes (st, nd, rd, th) from game dates -Reconstructing full dates using the season year -Converting dates -Creating new scoring variables -Filtering -Extracting numeric week values -Handling missing or inconsistent entries"
   },
   {
     "objectID": "project/danl-proj.html",
@@ -390,110 +215,5 @@
     "title": "ggplot2 for NFL Data",
     "section": "",
     "text": "1 Getting Started\nExplains how I used ggplot2 to visualize NFL scoring patterns for the Data Storytelling Project. All examples used the cleaned dataset scores_clean, which includes: -total points, point differential, week number, season, home/away scores, and cleaned date scores\nWe learned how to:\n-create scatterplots, line charts, and bar charts using NFL data - Map scoring variables -Compare season and weeks -Customize themes, colors, and labels -Graphics for analysis and storytelling"
-  },
-  {
-    "objectID": "notes/danl-ggplot.html#install-one-time",
-    "href": "notes/danl-ggplot.html#install-one-time",
-    "title": "ggplot2 Basics",
-    "section": "2.1 Install (one-time)",
-    "text": "2.1 Install (one-time)\n\n\nShow the code\n# install.packages(\"tidyverse\")"
-  },
-  {
-    "objectID": "notes/danl-ggplot.html#load-packages",
-    "href": "notes/danl-ggplot.html#load-packages",
-    "title": "ggplot2 Basics",
-    "section": "2.2 Load packages",
-    "text": "2.2 Load packages\n\n\nShow the code\nlibrary(tidyverse)"
-  },
-  {
-    "objectID": "notes/danl-ggplot.html#basic-scatterplot",
-    "href": "notes/danl-ggplot.html#basic-scatterplot",
-    "title": "ggplot2 Basics",
-    "section": "5.1 Basic scatterplot",
-    "text": "5.1 Basic scatterplot\n\n\nShow the code\nggplot(mpg, aes(x = displ, y = hwy)) +\n  geom_point()"
-  },
-  {
-    "objectID": "notes/danl-ggplot.html#add-transparency",
-    "href": "notes/danl-ggplot.html#add-transparency",
-    "title": "ggplot2 Basics",
-    "section": "5.2 Add transparency",
-    "text": "5.2 Add transparency\n\n\nShow the code\nggplot(mpg, aes(x = displ, y = hwy)) +\n  geom_point(alpha = 0.5)"
-  },
-  {
-    "objectID": "notes/danl-ggplot.html#map-color-to-a-categorical-variable",
-    "href": "notes/danl-ggplot.html#map-color-to-a-categorical-variable",
-    "title": "ggplot2 Basics",
-    "section": "5.3 Map color to a categorical variable",
-    "text": "5.3 Map color to a categorical variable\n\n\nShow the code\nggplot(mpg, aes(x = displ, y = hwy, color = class)) +\n  geom_point(alpha = 0.7)"
-  },
-  {
-    "objectID": "notes/danl-ggplot.html#map-size-to-a-numeric-variable",
-    "href": "notes/danl-ggplot.html#map-size-to-a-numeric-variable",
-    "title": "ggplot2 Basics",
-    "section": "5.4 Map size to a numeric variable",
-    "text": "5.4 Map size to a numeric variable\n\n\nShow the code\nggplot(mpg, aes(x = displ, y = hwy, size = cyl)) +\n  geom_point(alpha = 0.6)\n\n\n\n\n\n\n\n\n\n✅ Rule of thumb:\n- color = ... inside aes() means it changes by data values\n- color = \"blue\" outside aes() means fixed color"
-  },
-  {
-    "objectID": "notes/danl-ggplot.html#add-a-smooth-trend",
-    "href": "notes/danl-ggplot.html#add-a-smooth-trend",
-    "title": "ggplot2 Basics",
-    "section": "6.1 Add a smooth trend",
-    "text": "6.1 Add a smooth trend\n\n\nShow the code\nggplot(mpg, aes(x = displ, y = hwy)) +\n  geom_point(alpha = 0.6) +\n  geom_smooth()"
-  },
-  {
-    "objectID": "notes/danl-ggplot.html#linear-regression-line",
-    "href": "notes/danl-ggplot.html#linear-regression-line",
-    "title": "ggplot2 Basics",
-    "section": "6.2 Linear regression line",
-    "text": "6.2 Linear regression line\n\n\nShow the code\nggplot(mpg, aes(x = displ, y = hwy)) +\n  geom_point(alpha = 0.6) +\n  geom_smooth(method = \"lm\", se = FALSE)"
-  },
-  {
-    "objectID": "notes/danl-ggplot.html#count-bar-chart",
-    "href": "notes/danl-ggplot.html#count-bar-chart",
-    "title": "ggplot2 Basics",
-    "section": "8.1 Count bar chart",
-    "text": "8.1 Count bar chart\n\n\nShow the code\nggplot(mpg, aes(x = class)) +\n  geom_bar()"
-  },
-  {
-    "objectID": "notes/danl-ggplot.html#flip-coordinates-nice-for-long-labels",
-    "href": "notes/danl-ggplot.html#flip-coordinates-nice-for-long-labels",
-    "title": "ggplot2 Basics",
-    "section": "8.2 Flip coordinates (nice for long labels)",
-    "text": "8.2 Flip coordinates (nice for long labels)\n\n\nShow the code\nggplot(mpg, aes(x = class)) +\n  geom_bar() +\n  coord_flip()"
-  },
-  {
-    "objectID": "notes/danl-ggplot.html#bar-chart-with-fill-color",
-    "href": "notes/danl-ggplot.html#bar-chart-with-fill-color",
-    "title": "ggplot2 Basics",
-    "section": "8.3 Bar chart with fill color",
-    "text": "8.3 Bar chart with fill color\n\n\nShow the code\nggplot(mpg, aes(x = class, fill = drv)) +\n  geom_bar()"
-  },
-  {
-    "objectID": "notes/danl-ggplot.html#step-1-summarize-with-dplyr",
-    "href": "notes/danl-ggplot.html#step-1-summarize-with-dplyr",
-    "title": "ggplot2 Basics",
-    "section": "9.1 Step 1: Summarize with dplyr",
-    "text": "9.1 Step 1: Summarize with dplyr\n\n\nShow the code\nmpg_mean &lt;- mpg |&gt;\n  group_by(class) |&gt;\n  summarise(mean_hwy = mean(hwy), .groups = \"drop\")\n\nmpg_mean\n\n\n# A tibble: 7 × 2\n  class      mean_hwy\n  &lt;chr&gt;         &lt;dbl&gt;\n1 2seater        24.8\n2 compact        28.3\n3 midsize        27.3\n4 minivan        22.4\n5 pickup         16.9\n6 subcompact     28.1\n7 suv            18.1"
-  },
-  {
-    "objectID": "notes/danl-ggplot.html#step-2-plot-the-summarized-data",
-    "href": "notes/danl-ggplot.html#step-2-plot-the-summarized-data",
-    "title": "ggplot2 Basics",
-    "section": "9.2 Step 2: Plot the summarized data",
-    "text": "9.2 Step 2: Plot the summarized data\n\n\nShow the code\nggplot(mpg_mean, aes(x = class, y = mean_hwy)) +\n  geom_col()\n\n\n\n\n\n\n\n\n\n✅ geom_bar() counts rows automatically.\n✅ geom_col() uses your own y-values."
-  },
-  {
-    "objectID": "notes/danl-ggplot.html#basic-line-plot",
-    "href": "notes/danl-ggplot.html#basic-line-plot",
-    "title": "ggplot2 Basics",
-    "section": "10.1 Basic line plot",
-    "text": "10.1 Basic line plot\n\n\nShow the code\nggplot(sales, aes(x = month, y = revenue)) +\n  geom_line()"
-  },
-  {
-    "objectID": "notes/danl-ggplot.html#line-points",
-    "href": "notes/danl-ggplot.html#line-points",
-    "title": "ggplot2 Basics",
-    "section": "10.2 Line + points",
-    "text": "10.2 Line + points\n\n\nShow the code\nggplot(sales, aes(x = month, y = revenue)) +\n  geom_line() +\n  geom_point()"
   }
 ]

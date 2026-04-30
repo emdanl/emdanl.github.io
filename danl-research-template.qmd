@@ -1,11 +1,11 @@
 ---
-title: Data Analytics Capstone Title
-subtitle: "My Project"
+title: Data Analytics Project
+subtitle: "Final End of Year Project"
 author:
-  - name: YOUR NAME 
+  - name: Erin Mansfield 
     affiliation: SUNY Geneseo
     
-  - name: YOUR COWORKER 1
+  - name: Jack Mansfield 
     affiliation: SUNY Geneseo
     
 date: last-modified
@@ -69,89 +69,78 @@ theme_set(theme_ipsum()+
 
 # Introduction
 
-Describe the real-world motivation for your project. Clearly state your research question and explain why it matters.
+The National Football League has changed multiple times over the past few years with their offensive strategy. From those changes, came questions on how the scoring patterns have been affected over time. As the NFL has evolved, analysts and fans have made claims that the NFL is turning into an offensive game. However, these claims are not necessary based on data analysis. 
 
-Briefly preview your data, empirical approach, main findings, and contribution.
+This particular project looks at if scoring has truly increased from the years 2010-2025. The data identifies when, where, and how the scoring has varied across not just seasons, but weeks. 
+
+You will see throughout this project that there is a clear data picture of how NFL scoring has evolved over time. It highlights the weeks and the seasons where the offensive performance may deviate from the past. 
 
 # Background and Related Literature
 
-Summarize the relevant background, institutional setting, or prior research related to your topic.
+The background comes from NFL scoring trends discussed by sports analysts. Analysts have claimed that the increase in offensive scoring to rule changes, quarterback development, and the rise in different offensive plays. Analysis done by ESPN and other sports data sites have shown short term spikes in scoring. However, looking at more long term data, there are more patterns that show a more consistent game pattern.
 
-Explain what is already known and how your project contributes to the existing discussion.
+The project pulls the data from the website Kaggle. The data is 15 seasons from the NFL. There are cleaning procedures done, and shows a league wide view of scoring behavior throughout time. 
 
 # Data
 
 ## Data Source
 
-Describe the data source clearly. Include the source name, link, and access date in the References section.
+The dataset is from Kaggle with NFL game logs from the 2010-2025 seasons. The row represents an NFL game, with team names, scores, week, season, game date, and game status. 
 
 ## Unit of Observation
 
-Explain what each row in your dataset represents.
+Each row is one NFL game. This is a perfect unit for scoring patterns analysts. 
 
 ## Key Variables
 
-Describe your outcome variable, main explanatory variables, and important control variables.
+The key variables include: 
+-HomeScore, AwayScore: raw points scored by each team
+-total_points: sum of both teams' scores
+-point_diff: absolute difference between scores 
+-winner/loser: team outcome indicators 
+-home_win: whether the home team won
+-GameDate: cleaned and standardized date
+-week_num: numeric week extracted from the "WEEEK X" label
+-Season: year of the season
 
 ## Data Cleaning
 
-Explain major cleaning steps, sample restrictions, missing values, and variable construction.
+Major cleaning steps: 
+- Removing suffixes (st, nd, rd, th) from game dates
+-Reconstructing full dates using the season year
+-Converting dates
+-Creating new scoring variables 
+-Filtering
+-Extracting numeric week values 
+-Handling missing or inconsistent entries
 
-## Summary Statistics
-
-```{r summary-statistics}
-# Replace this example with your own data and summary statistics.
-# skim(your_data)
-```
 
 # Empirical Strategy / Methods
 
-Describe the method used to answer your research question. This may include regression, classification, clustering, forecasting, text analysis, or another data analytics method.
+The goal of the project is to describe NFL scoring and how it has changed from years 2010-2025. The project identifies patterns across the seasons. The empirical strategy is on grouped summaries and visual analytics.
 
-For example, a **two-way fixed effects regression** can be used as an empirical strategy for **inference** when the goal is to estimate the relationship between a key explanatory variable and an outcome while accounting for unit-specific and time-specific factors:
+The analysis is in four steps: 
+1. Construct scoring variables: Computed total points, point differential, winner/loser indicators, and cleaned game dates. 
+2. Restrict to regular season games: Preseason and postseason games follow different scoring dynamics, so I changed the sample to only included the games labeled "FINAL" and "WEEK".
+3. Compute season-level and week level summaries: Calculated the average total points per season, average points per week, and distributions of point differentials. 
+4. Use visualization as a primary analytical tool: Created an interactive plotly line chart, an aminated bar chart, additional static ggplots.
 
-$$
-Y_{it} = \beta_0 + \beta_1 X_{it} + \delta' Z_{it} + \alpha_i + \lambda_t + \varepsilon_{it},
-$$
-
-where $Y_{it}$ is the outcome of interest for unit $i$ at time $t$, $X_{it}$ is the main explanatory variable, $Z_{it}$ represents control variables, $\alpha_i$ captures unit fixed effects, $\lambda_t$ captures time fixed effects, and $\varepsilon_{it}$ is the error term.
-
-If your project uses machine learning or prediction, explain your train/test split, cross-validation, model tuning, and performance metrics.
-
-# Results
-
-Present your main empirical findings using tables, figures, and written interpretation.
-
-```{r results-table}
-# Replace this example with your own table or model output.
-# modelsummary(list(model1, model2))
-```
-
-```{r results-figure}
-# Replace this example with your own figure.
-# ggplot(your_data, aes(x = x_variable, y = y_variable)) +
-#   geom_point() +
-#   labs(x = "X Variable", y = "Y Variable", title = "Main Result")
-```
 
 # Discussion and Implications
 
-Interpret your results. Explain what they imply for economics, business, policy, or society.
+The analysis shows clear patterns in NFL scoring from 2010-2025. The first is the average points per game has a very upward trend over the period, including the early 2020s. This does align with the narratives that there is an increase in offensive efficiency, rule changes, and rise of more impressive offenses. 
 
-Discuss limitations and clarify what your analysis can and cannot show.
+The second pattern is that scoring is not clearly uniform across the season. In the early weeks, there is more low scoring, but in mid season it shows the highest scoring averages. The late season weeks have more high and low peaks. This can be explained through injuries, weather, and more playoff incentives. 
+
+The third pattern is that the distribution of point differentials indicate that close games are common, however, high scoring blowouts are becoming more and more frequent. 
 
 # Conclusion
 
-Summarize your research question, data, method, main findings, and key takeaway.
-
-Briefly suggest possible future extensions.
+The project shows a comprehensive look at NFL scoring and how it has evolved from 2010-2025. There is game level data with visualization driven analysis. The results show an upward trend with scoring, with variation across weeks and seasons. The animated and interactive visualizations show the offensive perfomrance, and an understanding of the league-wide scoring behavior. 
 
 # References
 
-List all sources cited in your project, including data sources, academic articles, reports, websites, packages, and tools.
+1. Kaggle
+2. ESPN
 
-For online sources, include the full URL and date/time accessed.
 
-# Appendix
-
-Include additional tables, figures, robustness checks, code explanations, or variable definitions if needed.

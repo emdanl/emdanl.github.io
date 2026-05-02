@@ -11,19 +11,11 @@ website:
       - text: Project
         href: danl-research-template.qmd
       - text: Research
-        href: danl-310-data-storytelling-template
+        href: danl-310-data-storytelling-template.qmd
       - text: Presentation
         href: presentation.qmd
       - text: Dashboard
         href: dashboard.qmd
-
-        menu: 
-          - text: Data Visualization with `ggplot`
-            href: notes/danl-ggplot.qmd
-          - text: Data Transformation with `dplyr`
-            href: notes/danl-dplyr.qmd
-      - text: Blog
-        href: blog-listing.qmd
       
             
   # page-footer: 

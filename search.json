@@ -137,7 +137,7 @@
     "href": "danl-310-data-storytelling-template.html",
     "title": "NFL Scoring Trends",
     "section": "",
-    "text": "Project Webpage: Insert link here\n\nThe project looks into the scoring trends in the National Football League. The dataset includes the years 2010 through 2025. The dataset includes 5,832 games from the regular season, postgames season, and special events. This allows analysis to compare how scoring has changed over time, how team performance varies across seasons, and how competitive games are. This particular project includes descriptive statistics, visualizations, data transformations, along with an interactive dashboard."
+    "text": "Project Webpage: [https://emdanl.github.io]\n\nThe project looks into the scoring trends in the National Football League. The dataset includes the years 2010 through 2025. The dataset includes 5,832 games from the regular season, postgames season, and special events. This allows analysis to compare how scoring has changed over time, how team performance varies across seasons, and how competitive games are. This particular project includes descriptive statistics, visualizations, data transformations, along with an interactive dashboard."
   },
   {
     "objectID": "danl-310-data-storytelling-template.html#key-variables",
@@ -228,7 +228,7 @@
     "href": "danl-310-data-storytelling-template.html#dashboard",
     "title": "NFL Scoring Trends",
     "section": "Dashboard",
-    "text": "Dashboard\n\nDashboard: Insert link here\n\nThe dashboard will allow users to explore scoring trends interactively. This will include season averages, weekly scoring, and team level patterns."
+    "text": "Dashboard\n\nDashboard: [https://emdanl.github.io/dashboard.html]\n\nThe dashboard will allow users to explore scoring trends interactively. This will include season averages, weekly scoring, and team level patterns."
   },
   {
     "objectID": "danl-310-data-storytelling-template.html#limitations",

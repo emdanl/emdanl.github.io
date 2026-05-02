@@ -1,0 +1,362 @@
+---
+title: "NFL Scoring Trends"
+subtitle: "DANL 310: Data Visualization and Presentation"
+author:
+  - name: Erin Mansfield
+    affiliation: SUNY Geneseo
+  - name: Jack Mansfield
+    affiliation: SUNY Geneseo
+date: last-modified
+
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+  fig-width: 9
+  fig-height: 6
+
+format:
+  html:
+    toc: true
+    toc-title: "Contents"
+    toc-depth: 4
+    toc-expand: 3
+    number-sections: false
+    code-fold: false
+    code-tools: true
+    highlight-style: atom-one
+---
+
+```{r setup}
+#| include: false
+library(tidyverse)
+library(skimr)
+library(hrbrthemes)
+library(rmarkdown)
+
+# Add other packages as needed.
+# Examples:
+# library(lubridate)
+# library(janitor)
+# library(scales)
+# library(viridis)
+# library(plotly)
+# library(DT)
+# library(sf)
+
+# Feel free to revise this theme.
+theme_set(
+  theme_ipsum() +
+    theme(
+      strip.background = element_rect(fill = "lightgray"),
+      axis.title.x = element_text(size = rel(1.33)),
+      axis.title.y = element_text(size = rel(1.33))
+    )
+)
+
+# Optional color-blind-friendly scales.
+# scale_colour_discrete <- function(...) scale_colour_viridis_d(...)
+# scale_fill_discrete <- function(...) scale_fill_viridis_d(...)
+```
+
+# Project Overview
+
+- **Project Webpage:** [Insert link here](https://emdanl.github.io)
+
+The project looks into the scoring trends in the National Football League. The dataset includes the years 2010 through 2025. The dataset includes 5,832 games from the regular season, postgames season, and special events. This allows analysis to compare how scoring has changed over time, how team performance varies across seasons, and how competitive games are. This particular project includes descriptive statistics, visualizations, data transformations, along with an interactive dashboard.
+
+
+# Big Idea
+
+The NFL dataset proves that the NFL scoring has been relatively stable over the past 15 years. The average games tend to be scoring in the 40s, and high scoring games are competitive but rare. The team performance tends to vary from season to season, which supports the idea that the league can be unpredictable. 
+
+# Guiding Question or Story Theme
+
+How have scoring patterns, team performance, and competitiveness, changed across the NFL seasons from 2010 to 2025. 
+
+# Background and Context
+
+The National Football League is one of the most watched sports leagues in the United States. Scoring changes in the NFL are closely related to rule chagnes, team performances, and offensive strategies. Showing how scoring has changed, and understanding why, provides insights into competitiveness of the league, offensives changes, and heightens the fans experience. 
+
+# Data
+
+```{r data-import}
+scores <- read_csv("2010-2025_scores.csv")
+head(scores)
+```
+
+
+## Key Variables
+
+- **Season** - year of the NFL season
+- **Week** - week number (regular season only)
+- **GameStatus** - Final, preseason, or special event
+- **GameDate** - date of the game
+- **HomeTeam/AwayTeam** - team abbreviations 
+- **HomeScore/AwayScore** - points scored
+
+
+## Unit of Observation
+
+Each row represents **one NFL Game**
+
+
+
+## Data Source
+
+- **Dataset:** NFL scores from 2010-2025
+- **Source:** Kaggle
+- **Accessed:** 2026
+- Contains game level scoring data. 
+
+
+# Data Preparation and Transformation
+
+These transformations standardize dates, identify the winning and losing teams, filters out the preason and special events games, and creates more scoring metrics.
+
+```{r data-preparation}
+scores_clean <- scores |>
+  mutate(
+    GameDate_clean = str_remove(GameDate, "(st|nd|rd|th)$"),
+    GameDate_full = paste(GameDate_clean, Season),
+    GameDate = suppressWarnings(mdy(GameDate_full)),
+    total_points = HomeScore + AwayScore,
+    point_diff = abs(HomeScore - AwayScore),
+    winner = ifelse(HomeScore > AwayScore, HomeTeam, AwayTeam),
+    loser = ifelse(HomeScore < AwayScore, HomeTeam, AwayTeam),
+    home_win = HomeScore > AwayScore
+  )
+regular <- scores_clean |>
+  filter(GameStatus == "Regular") |>
+  filter(str_detect(Week, "^WEEK"))
+```
+
+
+# Descriptive Statistics
+
+The dataset includes 5,832 games from the seasons 2010 to 2025. The row will represent one single game, and will contain information from teams, scores, game date, and game status. After cleaning and filtering, the dataset only included regular season and completed games. 
+
+## Basic Summary
+
+```{r summary-statistics}
+skimr::skim(scores_clean)
+```
+
+## Important Counts, Rates, or Group Summaries
+
+```{r descriptive-summary}
+regular <- scores_clean |>
+  filter(GameStatus == "FINAL") |>
+  filter(str_detect(Week, "^WEEK"))
+
+season_summary <- regular |>
+  group_by(Season) |>
+  summarise(
+    avg_points = mean(total_points, na.rm = TRUE),
+    avg_diff = mean(point_diff, na.rm = TRUE),
+    games = n(),
+    high_scoring = sum(total_points >= 50, na.rm = TRUE),
+    close_games = sum(point_diff <= 3, na.rm = TRUE)
+  )
+season_summary
+```
+
+## Initial Observations
+
+- Average scoring per game is around 43 to 47 points 
+- The 2020 season has the highest scoring average of around 49.5 points
+- Close games occur regularly, which shows strong competitiveness
+- The number of games increased from 256 to 272 in 2021 due to schedule expansion
+
+# Data Visualization and Storytelling
+
+## Visualization 1: Main Pattern
+
+```{r visualization-1}
+# Average Points per Season 
+ggplot(season_summary, aes(x = Season, y = avg_points)) +
+  geom_line(color = "steelblue", linewidth = 1.2) +
+  geom_point(color = "steelblue", size = 2) +
+  labs(
+    title = "Average Total Points per Game by Season",
+    x = "Season",
+    y = "Average Points"
+  ) + 
+  theme_minimal(base_size = 14)
+```
+
+**Interpretation:**  
+The line graph shows that scoring is relatively stable, with a spike in 2020. There are dips in scoring around 2017, 2022, and in 2023. 
+
+## Visualization 2: Comparison or Contrast
+
+```{r visualization-2}
+# Total Games per Season
+ggplot(season_summary, aes(x = Season, y = games)) +
+  geom_line(color = "darkgreen", linewidth = 1.2) +
+  geom_point(color = "darkgreen", size = 2) +
+  labs(
+    title = "Number of Regular Season Games per Season",
+    x = "Season",
+    y = "Games"
+  ) +
+  theme_minimal(base_size = 14)
+```
+
+**Interpretation:**  
+There is a jump from 256 to 272 games in 2021 to reflects the NFL's scheudle expansion.
+
+## Visualization 3: Trend, Relationship, or Deeper Pattern
+
+```{r visualization-3}
+# Average Points by Week
+avg_points_by_week <- regular |>
+  mutate(week_num = as.numeric(str_extract(Week, "\\d+"))) |>
+  group_by(week_num) |>
+  summarise(avg_points = mean(total_points, na.rm = TRUE))
+ggplot(avg_points_by_week, aes(x = week_num, y = avg_points)) +
+  geom_col(fill = "darkorange") +
+  labs(
+    title = "Average Points by Week (all seasons)",
+    x = "Week",
+    y = "Average Points"
+  ) + 
+  theme_minimal(base_size = 14)
+```
+
+**Interpretation:**  
+Scoring is consistent across weeks. There are slight increases in the middle of the season, and will dip late season. This could be due to play off contention, injuries, and teams getting organized offensively. 
+
+## Optional Visualization 4: Additional Evidence 1
+
+```{r visualization-4}
+# High Scoring Games per Season
+ggplot(season_summary, aes(x = Season, y = high_scoring)) + 
+  geom_col(fill = "purple") + 
+  labs(
+    title = "Number of High Scoring Games per Season",
+    x = "Season",
+    y = "High Scoring Games"
+  ) + 
+  theme_minimal(base_size = 14)
+```
+
+**Interpretation:**  
+High scoring games vary, and there are noticeable peaks in 2013, 2018, 2020, and 2021. 
+
+## Optional Visualization 5: Additional Evidence 2
+
+```{r visualization-5}
+# Heatmap
+team_season_points <- regular |>
+  mutate(
+    team = HomeTeam,
+    points = HomeScore
+  ) |>
+  bind_rows(
+    regular |>
+      mutate(
+        team = AwayTeam,
+        points = AwayScore
+      )
+  ) |>
+  group_by(team, Season) |>
+  summarise(
+    avg_points = mean(points, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+
+team_heatmap <- team_season_points |>
+  ggplot(aes(x = Season, y = team, fill = avg_points)) +
+  geom_tile(color = "white") +
+  scale_fill_viridis_c(option = "plasma", name = "Avg Points") +
+  labs(
+    title = "NFL Team Scoring Heatmap",
+    x = "Season",
+    y = "Team"
+  ) + 
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.y = element_text(size = 8)
+  )
+team_heatmap
+```
+
+**Interpretation:**  
+Teams are shown having large year to year variation, which highlights the NFL's unpredictability from season to season. 
+
+## Shiny App
+
+```{=html}
+<div style="display: flex; justify-content: center; margin: 1em 0;">
+  <iframe
+    src="YOUR_SHINY_APP_URL"
+    width="800"
+    height="800"
+    frameborder="0"
+    style="border: none;"
+  ></iframe>
+</div>
+```
+
+Briefly describe the Shiny app and dashboard that accompany this project.
+
+
+## Dashboard
+
+- **Dashboard:** [Insert link here](https://emdanl.github.io/dashboard.html)
+
+The dashboard will allow users to explore scoring trends interactively. This will include season averages, weekly scoring, and team level patterns. 
+
+# Connecting the Dots
+
+Bring the visual evidence together.
+
+Across all of the analyses, the NFL has strong stable scoring, has some variability in competitiveness, and has significant team fluctuations. The 2020 season will stand out due to the world events during the time as an unusually high scoring year. The year 2021 schedule expansion will increased in total games. 
+
+# Discussion
+
+The data will suggest that scoring does fluctuate slightly, however, the league will maintain a consistent offensive output. High scoring games do tend to be more competitive, while team performance will vary widely from season to season. 
+
+## Limitations
+
+- Data does not include postseason games
+- Does not account for rule changes 
+- Data includes only final scores, does not have play by play detail
+
+# Conclusion
+
+The NFL scoring has been stable over the past 15 years, despite changes in rules and regulations. There have been noticeable spikes and dips throughout the seasons as well. The team performance will vary significantly, which shows the league's competitive balance. Understanding and learning about these patterns will help to show the trends in offense and competitiveness. 
+
+# Future Directions
+
+- Explore defensive performance 
+- Compare across divisions
+- Add play by play or drive level data
+
+# References
+
+- Kaggle NFL Scores Dataset
+- ESPN
+
+
+# Project Checklist
+
+Before submitting, check that your project includes the following:
+
+- [ ] A clear Big Idea or main message.
+- [ ] A clear guiding question or story theme.
+- [ ] A description of the data source and unit of observation.
+- [ ] Data transformation code and explanation.
+- [ ] Descriptive statistics that help set up the story.
+- [ ] Clear and readable visualizations.
+- [ ] Written interpretation after each major figure.
+- [ ] A coherent narrative connecting the figures together.
+- [ ] A conclusion explaining why the story matters.
+- [ ] A published project webpage on each member's personal GitHub website.
+- [ ] A published Shiny app using the project data.
+- [ ] A published dashboard using the project data.
+- [ ] No unnecessary regression, machine learning, or formal modeling section.
+- [ ] No major code errors, warnings, or redundant output.

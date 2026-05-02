@@ -10,6 +10,8 @@ website:
     left:
       - text: Project
         href: danl-research-template.qmd
+      - text: Research
+        href: danl-310-data-storytelling-template
       - text: Presentation
       - text: Data Analysis
       - text: Dashboard

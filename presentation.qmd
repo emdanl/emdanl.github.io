@@ -14,7 +14,7 @@ scores <- read_csv("2010-2025_scores.csv")
 head(scores)
 
 
-# The dataset taken from the website Kaggle details information on the National Football League games from 2010 through 2025. The dataset includes 5,832 observations and 9 variables. The observations and dataset show a record of game outcomes across several seasons. The games include preseason, regular season, and special events. There are key details from a single game. The key details and variables included are seaosn, week, GameStatus, GameDate, AwayTeam, AwayScore, HomeTeam, and HomeScore. The team names are abbreviated, for example DAL is for the Dallas Cowboys. Scores are recorded as numeric values, which makes the statistical analysis of the data more suitable. The dataset can be used for analyzing scoring trends over time, differences between home and away performance, and building models for game outcomes. 
+# The dataset taken from the website Kaggle details information on the National Football League games from 2010 through 2025. The dataset includes 5,832 observations and 9 variables. The observations and dataset show a record of game outcomes across several seasons. The games include preseason, regular season, and special events. There are key details from a single game. The key details and variables included are season, week, GameStatus, GameDate, AwayTeam, AwayScore, HomeTeam, and HomeScore. The team names are abbreviated, for example DAL is for the Dallas Cowboys. Scores are recorded as numeric values, which makes the statistical analysis of the data more suitable. The dataset can be used for analyzing scoring trends over time, differences between home and away performance, and building models for game outcomes. 
 ```
 
 ```{r}

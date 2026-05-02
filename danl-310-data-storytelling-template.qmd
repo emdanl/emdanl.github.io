@@ -62,7 +62,7 @@ theme_set(
 
 # Project Overview
 
-- **Project Webpage:** [Insert link here](https://emdanl.github.io)
+- **Project Webpage:** [https://emdanl.github.io]
 
 The project looks into the scoring trends in the National Football League. The dataset includes the years 2010 through 2025. The dataset includes 5,832 games from the regular season, postgames season, and special events. This allows analysis to compare how scoring has changed over time, how team performance varies across seasons, and how competitive games are. This particular project includes descriptive statistics, visualizations, data transformations, along with an interactive dashboard.
 
@@ -306,7 +306,7 @@ Briefly describe the Shiny app and dashboard that accompany this project.
 
 ## Dashboard
 
-- **Dashboard:** [Insert link here](https://emdanl.github.io/dashboard.html)
+- **Dashboard:** [https://emdanl.github.io/dashboard.html]
 
 The dashboard will allow users to explore scoring trends interactively. This will include season averages, weekly scoring, and team level patterns. 
 
@@ -341,22 +341,3 @@ The NFL scoring has been stable over the past 15 years, despite changes in rules
 - Kaggle NFL Scores Dataset
 - ESPN
 
-
-# Project Checklist
-
-Before submitting, check that your project includes the following:
-
-- [ ] A clear Big Idea or main message.
-- [ ] A clear guiding question or story theme.
-- [ ] A description of the data source and unit of observation.
-- [ ] Data transformation code and explanation.
-- [ ] Descriptive statistics that help set up the story.
-- [ ] Clear and readable visualizations.
-- [ ] Written interpretation after each major figure.
-- [ ] A coherent narrative connecting the figures together.
-- [ ] A conclusion explaining why the story matters.
-- [ ] A published project webpage on each member's personal GitHub website.
-- [ ] A published Shiny app using the project data.
-- [ ] A published dashboard using the project data.
-- [ ] No unnecessary regression, machine learning, or formal modeling section.
-- [ ] No major code errors, warnings, or redundant output.

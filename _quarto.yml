@@ -13,7 +13,7 @@ website:
       - text: Research
         href: danl-310-data-storytelling-template
       - text: Presentation
-      - text: Data Analysis
+        href: presentation.qmd
       - text: Dashboard
         href: dashboard.qmd
 

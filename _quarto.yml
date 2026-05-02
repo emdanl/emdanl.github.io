@@ -11,8 +11,10 @@ website:
       - text: Project
         href: danl-research-template.qmd
       - text: Presentation
-        href: presentation.qmd
       - text: Data Analysis
+      - text: Dashboard
+        href: dashboard.qmd
+
         menu: 
           - text: Data Visualization with `ggplot`
             href: notes/danl-ggplot.qmd
